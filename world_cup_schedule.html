@@ -2047,6 +2047,8 @@
     function normalizeTeamName(name) {
       if (!name) return "";
       const n = name.toLowerCase().trim();
+      if (n === "usa" || n.includes("united states")) return "united states";
+      if (n.includes("turkey") || n.includes("türkiye")) return "türkiye";
       if (n.includes("czech")) return "czechia";
       if (n.includes("bosnia")) return "bosnia and herzegovina";
       if (n.includes("ivory") || n.includes("côte d'ivoire") || n.includes("cote d'ivoire")) return "côte d'ivoire";

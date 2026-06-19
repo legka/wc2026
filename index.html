@@ -505,6 +505,12 @@
       color: var(--text-secondary);
     }
 
+    .time-badge {
+      background-color: var(--bg-input);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+    }
+
     .match-card-status {
       font-weight: 750;
       text-transform: uppercase;
@@ -720,6 +726,27 @@
       align-items: center;
       gap: 6px;
       overflow: hidden;
+      flex: 1;
+    }
+
+    .match-time-footer {
+      font-weight: 700;
+      color: var(--accent-color);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background-color var(--transition-fast);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+      margin-left: 8px;
+      font-size: 0.75rem;
+    }
+
+    .match-time-footer:hover {
+      background-color: var(--bg-input);
     }
 
     .venue-icon {
@@ -1523,7 +1550,7 @@
             <option value="COMPLETED">Completed</option>
             <option value="UPCOMING">Upcoming</option>
           </select>
-          <button class="action-btn today-btn" id="today-btn" onclick="scrollToToday()" title="Scroll to today's matches (June 15, 2026)">
+          <button class="action-btn today-btn" id="today-btn" onclick="scrollToToday()" title="Scroll to today's matches">
             📅 Go to Today
           </button>
         </div>
@@ -1699,12 +1726,32 @@
       { name: "Estadio BBVA, Monterrey", city: "Guadalupe", country: "Mexico", flag: "🇲🇽", capacity: "53,500" }
     ];
 
+    const venueTimezones = {
+      "Estadio Azteca, Mexico City": "America/Mexico_City",
+      "MetLife Stadium, New Jersey": "America/New_York",
+      "AT&T Stadium, Dallas": "America/Chicago",
+      "Arrowhead Stadium, Kansas City": "America/Chicago",
+      "Mercedes-Benz Stadium, Atlanta": "America/New_York",
+      "SoFi Stadium, Los Angeles": "America/Los_Angeles",
+      "NRG Stadium, Houston": "America/Chicago",
+      "Gillette Stadium, Boston": "America/New_York",
+      "Lincoln Financial Field, Philadelphia": "America/New_York",
+      "Levi's Stadium, San Francisco": "America/Los_Angeles",
+      "Lumen Field, Seattle": "America/Los_Angeles",
+      "Hard Rock Stadium, Miami": "America/New_York",
+      "BC Place, Vancouver": "America/Vancouver",
+      "BMO Field, Toronto": "America/Toronto",
+      "Estadio Akron, Guadalajara": "America/Mexico_City",
+      "Estadio BBVA, Monterrey": "America/Monterrey"
+    };
+
     // Core State Object
     let state = {
       matches: [],
       activeTab: "matches",
       groupViewMode: "grid",
-      focusGroup: "A"
+      focusGroup: "A",
+      timeDisplayMode: "venue"
     };
 
     // Date Map for Round Robin
@@ -1742,78 +1789,78 @@
     function initMatches() {
       // Static array of official FIFA World Cup 2026 group stage matches
       const officialMatches = [
-  { id: 1, group: "A", matchday: 1, date: "2026-06-11", venue: "Estadio Azteca, Mexico City", team1: "Mexico", team2: "South Africa", score1: null, score2: null, revealed: false },
-  { id: 2, group: "A", matchday: 1, date: "2026-06-11", venue: "Estadio Akron, Guadalajara", team1: "South Korea", team2: "Czechia", score1: null, score2: null, revealed: false },
-  { id: 3, group: "A", matchday: 8, date: "2026-06-18", venue: "Mercedes-Benz Stadium, Atlanta", team1: "Czechia", team2: "South Africa", score1: null, score2: null, revealed: false },
-  { id: 4, group: "A", matchday: 8, date: "2026-06-18", venue: "Estadio Akron, Guadalajara", team1: "Mexico", team2: "South Korea", score1: null, score2: null, revealed: false },
-  { id: 5, group: "A", matchday: 14, date: "2026-06-24", venue: "Estadio Azteca, Mexico City", team1: "Czechia", team2: "Mexico", score1: null, score2: null, revealed: false },
-  { id: 6, group: "A", matchday: 14, date: "2026-06-24", venue: "Estadio BBVA, Monterrey", team1: "South Africa", team2: "South Korea", score1: null, score2: null, revealed: false },
-  { id: 7, group: "B", matchday: 2, date: "2026-06-12", venue: "BMO Field, Toronto", team1: "Canada", team2: "Bosnia and Herzegovina", score1: null, score2: null, revealed: false },
-  { id: 8, group: "B", matchday: 3, date: "2026-06-13", venue: "Levi's Stadium, San Francisco", team1: "Qatar", team2: "Switzerland", score1: null, score2: null, revealed: false },
-  { id: 9, group: "B", matchday: 8, date: "2026-06-18", venue: "SoFi Stadium, Los Angeles", team1: "Switzerland", team2: "Bosnia and Herzegovina", score1: null, score2: null, revealed: false },
-  { id: 10, group: "B", matchday: 8, date: "2026-06-18", venue: "BC Place, Vancouver", team1: "Canada", team2: "Qatar", score1: null, score2: null, revealed: false },
-  { id: 11, group: "B", matchday: 14, date: "2026-06-24", venue: "BC Place, Vancouver", team1: "Switzerland", team2: "Canada", score1: null, score2: null, revealed: false },
-  { id: 12, group: "B", matchday: 14, date: "2026-06-24", venue: "Lumen Field, Seattle", team1: "Bosnia and Herzegovina", team2: "Qatar", score1: null, score2: null, revealed: false },
-  { id: 13, group: "C", matchday: 3, date: "2026-06-13", venue: "MetLife Stadium, New Jersey", team1: "Brazil", team2: "Morocco", score1: null, score2: null, revealed: false },
-  { id: 14, group: "C", matchday: 3, date: "2026-06-13", venue: "Gillette Stadium, Boston", team1: "Haiti", team2: "Scotland", score1: null, score2: null, revealed: false },
-  { id: 15, group: "C", matchday: 9, date: "2026-06-19", venue: "Gillette Stadium, Boston", team1: "Scotland", team2: "Morocco", score1: null, score2: null, revealed: false },
-  { id: 16, group: "C", matchday: 9, date: "2026-06-19", venue: "Lincoln Financial Field, Philadelphia", team1: "Brazil", team2: "Haiti", score1: null, score2: null, revealed: false },
-  { id: 17, group: "C", matchday: 14, date: "2026-06-24", venue: "Hard Rock Stadium, Miami", team1: "Scotland", team2: "Brazil", score1: null, score2: null, revealed: false },
-  { id: 18, group: "C", matchday: 14, date: "2026-06-24", venue: "Mercedes-Benz Stadium, Atlanta", team1: "Morocco", team2: "Haiti", score1: null, score2: null, revealed: false },
-  { id: 19, group: "D", matchday: 2, date: "2026-06-12", venue: "SoFi Stadium, Los Angeles", team1: "United States", team2: "Paraguay", score1: null, score2: null, revealed: false },
-  { id: 20, group: "D", matchday: 3, date: "2026-06-13", venue: "BC Place, Vancouver", team1: "Australia", team2: "Türkiye", score1: null, score2: null, revealed: false },
-  { id: 21, group: "D", matchday: 9, date: "2026-06-19", venue: "Lumen Field, Seattle", team1: "United States", team2: "Australia", score1: null, score2: null, revealed: false },
-  { id: 22, group: "D", matchday: 9, date: "2026-06-19", venue: "Levi's Stadium, San Francisco", team1: "Türkiye", team2: "Paraguay", score1: null, score2: null, revealed: false },
-  { id: 23, group: "D", matchday: 15, date: "2026-06-25", venue: "SoFi Stadium, Los Angeles", team1: "Türkiye", team2: "United States", score1: null, score2: null, revealed: false },
-  { id: 24, group: "D", matchday: 15, date: "2026-06-25", venue: "Levi's Stadium, San Francisco", team1: "Paraguay", team2: "Australia", score1: null, score2: null, revealed: false },
-  { id: 25, group: "E", matchday: 4, date: "2026-06-14", venue: "NRG Stadium, Houston", team1: "Germany", team2: "Curaçao", score1: null, score2: null, revealed: false },
-  { id: 26, group: "E", matchday: 4, date: "2026-06-14", venue: "Lincoln Financial Field, Philadelphia", team1: "Côte d'Ivoire", team2: "Ecuador", score1: null, score2: null, revealed: false },
-  { id: 27, group: "E", matchday: 10, date: "2026-06-20", venue: "BMO Field, Toronto", team1: "Germany", team2: "Côte d'Ivoire", score1: null, score2: null, revealed: false },
-  { id: 28, group: "E", matchday: 10, date: "2026-06-20", venue: "Arrowhead Stadium, Kansas City", team1: "Ecuador", team2: "Curaçao", score1: null, score2: null, revealed: false },
-  { id: 29, group: "E", matchday: 15, date: "2026-06-25", venue: "Lincoln Financial Field, Philadelphia", team1: "Curaçao", team2: "Côte d'Ivoire", score1: null, score2: null, revealed: false },
-  { id: 30, group: "E", matchday: 15, date: "2026-06-25", venue: "MetLife Stadium, New Jersey", team1: "Ecuador", team2: "Germany", score1: null, score2: null, revealed: false },
-  { id: 31, group: "F", matchday: 4, date: "2026-06-14", venue: "AT&T Stadium, Dallas", team1: "Netherlands", team2: "Japan", score1: null, score2: null, revealed: false },
-  { id: 32, group: "F", matchday: 4, date: "2026-06-14", venue: "Estadio BBVA, Monterrey", team1: "Sweden", team2: "Tunisia", score1: null, score2: null, revealed: false },
-  { id: 33, group: "F", matchday: 10, date: "2026-06-20", venue: "NRG Stadium, Houston", team1: "Netherlands", team2: "Sweden", score1: null, score2: null, revealed: false },
-  { id: 34, group: "F", matchday: 10, date: "2026-06-20", venue: "Estadio BBVA, Monterrey", team1: "Tunisia", team2: "Japan", score1: null, score2: null, revealed: false },
-  { id: 35, group: "F", matchday: 15, date: "2026-06-25", venue: "AT&T Stadium, Dallas", team1: "Japan", team2: "Sweden", score1: null, score2: null, revealed: false },
-  { id: 36, group: "F", matchday: 15, date: "2026-06-25", venue: "Arrowhead Stadium, Kansas City", team1: "Tunisia", team2: "Netherlands", score1: null, score2: null, revealed: false },
-  { id: 37, group: "G", matchday: 5, date: "2026-06-15", venue: "Lumen Field, Seattle", team1: "Belgium", team2: "Egypt", score1: null, score2: null, revealed: false },
-  { id: 38, group: "G", matchday: 5, date: "2026-06-15", venue: "SoFi Stadium, Los Angeles", team1: "Iran", team2: "New Zealand", score1: null, score2: null, revealed: false },
-  { id: 39, group: "G", matchday: 11, date: "2026-06-21", venue: "SoFi Stadium, Los Angeles", team1: "Belgium", team2: "Iran", score1: null, score2: null, revealed: false },
-  { id: 40, group: "G", matchday: 11, date: "2026-06-21", venue: "BC Place, Vancouver", team1: "New Zealand", team2: "Egypt", score1: null, score2: null, revealed: false },
-  { id: 41, group: "G", matchday: 16, date: "2026-06-26", venue: "Lumen Field, Seattle", team1: "Egypt", team2: "Iran", score1: null, score2: null, revealed: false },
-  { id: 42, group: "G", matchday: 16, date: "2026-06-26", venue: "BC Place, Vancouver", team1: "New Zealand", team2: "Belgium", score1: null, score2: null, revealed: false },
-  { id: 43, group: "H", matchday: 5, date: "2026-06-15", venue: "Mercedes-Benz Stadium, Atlanta", team1: "Spain", team2: "Cape Verde", score1: null, score2: null, revealed: false },
-  { id: 44, group: "H", matchday: 5, date: "2026-06-15", venue: "Hard Rock Stadium, Miami", team1: "Saudi Arabia", team2: "Uruguay", score1: null, score2: null, revealed: false },
-  { id: 45, group: "H", matchday: 11, date: "2026-06-21", venue: "Mercedes-Benz Stadium, Atlanta", team1: "Spain", team2: "Saudi Arabia", score1: null, score2: null, revealed: false },
-  { id: 46, group: "H", matchday: 11, date: "2026-06-21", venue: "Hard Rock Stadium, Miami", team1: "Uruguay", team2: "Cape Verde", score1: null, score2: null, revealed: false },
-  { id: 47, group: "H", matchday: 16, date: "2026-06-26", venue: "NRG Stadium, Houston", team1: "Cape Verde", team2: "Saudi Arabia", score1: null, score2: null, revealed: false },
-  { id: 48, group: "H", matchday: 16, date: "2026-06-26", venue: "Estadio Akron, Guadalajara", team1: "Uruguay", team2: "Spain", score1: null, score2: null, revealed: false },
-  { id: 49, group: "I", matchday: 6, date: "2026-06-16", venue: "MetLife Stadium, New Jersey", team1: "France", team2: "Senegal", score1: null, score2: null, revealed: false },
-  { id: 50, group: "I", matchday: 6, date: "2026-06-16", venue: "Gillette Stadium, Boston", team1: "Iraq", team2: "Norway", score1: null, score2: null, revealed: false },
-  { id: 51, group: "I", matchday: 12, date: "2026-06-22", venue: "Lincoln Financial Field, Philadelphia", team1: "France", team2: "Iraq", score1: null, score2: null, revealed: false },
-  { id: 52, group: "I", matchday: 12, date: "2026-06-22", venue: "MetLife Stadium, New Jersey", team1: "Norway", team2: "Senegal", score1: null, score2: null, revealed: false },
-  { id: 53, group: "I", matchday: 16, date: "2026-06-26", venue: "Gillette Stadium, Boston", team1: "Norway", team2: "France", score1: null, score2: null, revealed: false },
-  { id: 54, group: "I", matchday: 16, date: "2026-06-26", venue: "BMO Field, Toronto", team1: "Senegal", team2: "Iraq", score1: null, score2: null, revealed: false },
-  { id: 55, group: "J", matchday: 6, date: "2026-06-16", venue: "Arrowhead Stadium, Kansas City", team1: "Argentina", team2: "Algeria", score1: null, score2: null, revealed: false },
-  { id: 56, group: "J", matchday: 6, date: "2026-06-16", venue: "Levi's Stadium, San Francisco", team1: "Austria", team2: "Jordan", score1: null, score2: null, revealed: false },
-  { id: 57, group: "J", matchday: 12, date: "2026-06-22", venue: "AT&T Stadium, Dallas", team1: "Argentina", team2: "Austria", score1: null, score2: null, revealed: false },
-  { id: 58, group: "J", matchday: 12, date: "2026-06-22", venue: "Levi's Stadium, San Francisco", team1: "Jordan", team2: "Algeria", score1: null, score2: null, revealed: false },
-  { id: 59, group: "J", matchday: 17, date: "2026-06-27", venue: "Arrowhead Stadium, Kansas City", team1: "Algeria", team2: "Austria", score1: null, score2: null, revealed: false },
-  { id: 60, group: "J", matchday: 17, date: "2026-06-27", venue: "AT&T Stadium, Dallas", team1: "Jordan", team2: "Argentina", score1: null, score2: null, revealed: false },
-  { id: 61, group: "K", matchday: 7, date: "2026-06-17", venue: "NRG Stadium, Houston", team1: "Portugal", team2: "DR Congo", score1: null, score2: null, revealed: false },
-  { id: 62, group: "K", matchday: 7, date: "2026-06-17", venue: "Estadio Azteca, Mexico City", team1: "Uzbekistan", team2: "Colombia", score1: null, score2: null, revealed: false },
-  { id: 63, group: "K", matchday: 13, date: "2026-06-23", venue: "NRG Stadium, Houston", team1: "Portugal", team2: "Uzbekistan", score1: null, score2: null, revealed: false },
-  { id: 64, group: "K", matchday: 13, date: "2026-06-23", venue: "Estadio Akron, Guadalajara", team1: "Colombia", team2: "DR Congo", score1: null, score2: null, revealed: false },
-  { id: 65, group: "K", matchday: 17, date: "2026-06-27", venue: "Hard Rock Stadium, Miami", team1: "Colombia", team2: "Portugal", score1: null, score2: null, revealed: false },
-  { id: 66, group: "K", matchday: 17, date: "2026-06-27", venue: "Mercedes-Benz Stadium, Atlanta", team1: "DR Congo", team2: "Uzbekistan", score1: null, score2: null, revealed: false },
-  { id: 67, group: "L", matchday: 7, date: "2026-06-17", venue: "AT&T Stadium, Dallas", team1: "England", team2: "Croatia", score1: null, score2: null, revealed: false },
-  { id: 68, group: "L", matchday: 7, date: "2026-06-17", venue: "BMO Field, Toronto", team1: "Ghana", team2: "Panama", score1: null, score2: null, revealed: false },
-  { id: 69, group: "L", matchday: 13, date: "2026-06-23", venue: "Gillette Stadium, Boston", team1: "England", team2: "Ghana", score1: null, score2: null, revealed: false },
-  { id: 70, group: "L", matchday: 13, date: "2026-06-23", venue: "BMO Field, Toronto", team1: "Panama", team2: "Croatia", score1: null, score2: null, revealed: false },
-  { id: 71, group: "L", matchday: 17, date: "2026-06-27", venue: "MetLife Stadium, New Jersey", team1: "Panama", team2: "England", score1: null, score2: null, revealed: false },
-  { id: 72, group: "L", matchday: 17, date: "2026-06-27", venue: "Lincoln Financial Field, Philadelphia", team1: "Croatia", team2: "Ghana", score1: null, score2: null, revealed: false }
+  { id: 1, group: "A", matchday: 1, date: "2026-06-11", time: "17:00", venue: "Estadio Azteca, Mexico City", team1: "Mexico", team2: "South Africa", score1: null, score2: null, revealed: false },
+  { id: 2, group: "A", matchday: 1, date: "2026-06-11", time: "20:00", venue: "Estadio Akron, Guadalajara", team1: "South Korea", team2: "Czechia", score1: null, score2: null, revealed: false },
+  { id: 3, group: "A", matchday: 8, date: "2026-06-18", time: "12:00", venue: "Mercedes-Benz Stadium, Atlanta", team1: "Czechia", team2: "South Africa", score1: null, score2: null, revealed: false },
+  { id: 4, group: "A", matchday: 8, date: "2026-06-18", time: "15:00", venue: "Estadio Akron, Guadalajara", team1: "Mexico", team2: "South Korea", score1: null, score2: null, revealed: false },
+  { id: 5, group: "A", matchday: 14, date: "2026-06-24", time: "16:00", venue: "Estadio Azteca, Mexico City", team1: "Czechia", team2: "Mexico", score1: null, score2: null, revealed: false },
+  { id: 6, group: "A", matchday: 14, date: "2026-06-24", time: "16:00", venue: "Estadio BBVA, Monterrey", team1: "South Africa", team2: "South Korea", score1: null, score2: null, revealed: false },
+  { id: 7, group: "B", matchday: 2, date: "2026-06-12", time: "17:00", venue: "BMO Field, Toronto", team1: "Canada", team2: "Bosnia and Herzegovina", score1: null, score2: null, revealed: false },
+  { id: 8, group: "B", matchday: 3, date: "2026-06-13", time: "12:00", venue: "Levi's Stadium, San Francisco", team1: "Qatar", team2: "Switzerland", score1: null, score2: null, revealed: false },
+  { id: 9, group: "B", matchday: 8, date: "2026-06-18", time: "18:00", venue: "SoFi Stadium, Los Angeles", team1: "Switzerland", team2: "Bosnia and Herzegovina", score1: null, score2: null, revealed: false },
+  { id: 10, group: "B", matchday: 8, date: "2026-06-18", time: "21:00", venue: "BC Place, Vancouver", team1: "Canada", team2: "Qatar", score1: null, score2: null, revealed: false },
+  { id: 11, group: "B", matchday: 14, date: "2026-06-24", time: "19:00", venue: "BC Place, Vancouver", team1: "Switzerland", team2: "Canada", score1: null, score2: null, revealed: false },
+  { id: 12, group: "B", matchday: 14, date: "2026-06-24", time: "19:00", venue: "Lumen Field, Seattle", team1: "Bosnia and Herzegovina", team2: "Qatar", score1: null, score2: null, revealed: false },
+  { id: 13, group: "C", matchday: 3, date: "2026-06-13", time: "15:00", venue: "MetLife Stadium, New Jersey", team1: "Brazil", team2: "Morocco", score1: null, score2: null, revealed: false },
+  { id: 14, group: "C", matchday: 3, date: "2026-06-13", time: "18:00", venue: "Gillette Stadium, Boston", team1: "Haiti", team2: "Scotland", score1: null, score2: null, revealed: false },
+  { id: 15, group: "C", matchday: 9, date: "2026-06-19", time: "12:00", venue: "Gillette Stadium, Boston", team1: "Scotland", team2: "Morocco", score1: null, score2: null, revealed: false },
+  { id: 16, group: "C", matchday: 9, date: "2026-06-19", time: "15:00", venue: "Lincoln Financial Field, Philadelphia", team1: "Brazil", team2: "Haiti", score1: null, score2: null, revealed: false },
+  { id: 17, group: "C", matchday: 14, date: "2026-06-24", time: "22:00", venue: "Hard Rock Stadium, Miami", team1: "Scotland", team2: "Brazil", score1: null, score2: null, revealed: false },
+  { id: 18, group: "C", matchday: 14, date: "2026-06-24", time: "22:00", venue: "Mercedes-Benz Stadium, Atlanta", team1: "Morocco", team2: "Haiti", score1: null, score2: null, revealed: false },
+  { id: 19, group: "D", matchday: 2, date: "2026-06-12", time: "20:00", venue: "SoFi Stadium, Los Angeles", team1: "United States", team2: "Paraguay", score1: null, score2: null, revealed: false },
+  { id: 20, group: "D", matchday: 3, date: "2026-06-13", time: "21:00", venue: "BC Place, Vancouver", team1: "Australia", team2: "Türkiye", score1: null, score2: null, revealed: false },
+  { id: 21, group: "D", matchday: 9, date: "2026-06-19", time: "18:00", venue: "Lumen Field, Seattle", team1: "United States", team2: "Australia", score1: null, score2: null, revealed: false },
+  { id: 22, group: "D", matchday: 9, date: "2026-06-19", time: "21:00", venue: "Levi's Stadium, San Francisco", team1: "Türkiye", team2: "Paraguay", score1: null, score2: null, revealed: false },
+  { id: 23, group: "D", matchday: 15, date: "2026-06-25", time: "16:00", venue: "SoFi Stadium, Los Angeles", team1: "Türkiye", team2: "United States", score1: null, score2: null, revealed: false },
+  { id: 24, group: "D", matchday: 15, date: "2026-06-25", time: "16:00", venue: "Levi's Stadium, San Francisco", team1: "Paraguay", team2: "Australia", score1: null, score2: null, revealed: false },
+  { id: 25, group: "E", matchday: 4, date: "2026-06-14", time: "12:00", venue: "NRG Stadium, Houston", team1: "Germany", team2: "Curaçao", score1: null, score2: null, revealed: false },
+  { id: 26, group: "E", matchday: 4, date: "2026-06-14", time: "15:00", venue: "Lincoln Financial Field, Philadelphia", team1: "Côte d'Ivoire", team2: "Ecuador", score1: null, score2: null, revealed: false },
+  { id: 27, group: "E", matchday: 10, date: "2026-06-20", time: "12:00", venue: "BMO Field, Toronto", team1: "Germany", team2: "Côte d'Ivoire", score1: null, score2: null, revealed: false },
+  { id: 28, group: "E", matchday: 10, date: "2026-06-20", time: "15:00", venue: "Arrowhead Stadium, Kansas City", team1: "Ecuador", team2: "Curaçao", score1: null, score2: null, revealed: false },
+  { id: 29, group: "E", matchday: 15, date: "2026-06-25", time: "19:00", venue: "Lincoln Financial Field, Philadelphia", team1: "Curaçao", team2: "Côte d'Ivoire", score1: null, score2: null, revealed: false },
+  { id: 30, group: "E", matchday: 15, date: "2026-06-25", time: "19:00", venue: "MetLife Stadium, New Jersey", team1: "Ecuador", team2: "Germany", score1: null, score2: null, revealed: false },
+  { id: 31, group: "F", matchday: 4, date: "2026-06-14", time: "18:00", venue: "AT&T Stadium, Dallas", team1: "Netherlands", team2: "Japan", score1: null, score2: null, revealed: false },
+  { id: 32, group: "F", matchday: 4, date: "2026-06-14", time: "21:00", venue: "Estadio BBVA, Monterrey", team1: "Sweden", team2: "Tunisia", score1: null, score2: null, revealed: false },
+  { id: 33, group: "F", matchday: 10, date: "2026-06-20", time: "18:00", venue: "NRG Stadium, Houston", team1: "Netherlands", team2: "Sweden", score1: null, score2: null, revealed: false },
+  { id: 34, group: "F", matchday: 10, date: "2026-06-20", time: "21:00", venue: "Estadio BBVA, Monterrey", team1: "Tunisia", team2: "Japan", score1: null, score2: null, revealed: false },
+  { id: 35, group: "F", matchday: 15, date: "2026-06-25", time: "22:00", venue: "AT&T Stadium, Dallas", team1: "Japan", team2: "Sweden", score1: null, score2: null, revealed: false },
+  { id: 36, group: "F", matchday: 15, date: "2026-06-25", time: "22:00", venue: "Arrowhead Stadium, Kansas City", team1: "Tunisia", team2: "Netherlands", score1: null, score2: null, revealed: false },
+  { id: 37, group: "G", matchday: 5, date: "2026-06-15", time: "12:00", venue: "Lumen Field, Seattle", team1: "Belgium", team2: "Egypt", score1: null, score2: null, revealed: false },
+  { id: 38, group: "G", matchday: 5, date: "2026-06-15", time: "15:00", venue: "SoFi Stadium, Los Angeles", team1: "Iran", team2: "New Zealand", score1: null, score2: null, revealed: false },
+  { id: 39, group: "G", matchday: 11, date: "2026-06-21", time: "12:00", venue: "SoFi Stadium, Los Angeles", team1: "Belgium", team2: "Iran", score1: null, score2: null, revealed: false },
+  { id: 40, group: "G", matchday: 11, date: "2026-06-21", time: "15:00", venue: "BC Place, Vancouver", team1: "New Zealand", team2: "Egypt", score1: null, score2: null, revealed: false },
+  { id: 41, group: "G", matchday: 16, date: "2026-06-26", time: "15:00", venue: "Lumen Field, Seattle", team1: "Egypt", team2: "Iran", score1: null, score2: null, revealed: false },
+  { id: 42, group: "G", matchday: 16, date: "2026-06-26", time: "15:00", venue: "BC Place, Vancouver", team1: "New Zealand", team2: "Belgium", score1: null, score2: null, revealed: false },
+  { id: 43, group: "H", matchday: 5, date: "2026-06-15", time: "18:00", venue: "Mercedes-Benz Stadium, Atlanta", team1: "Spain", team2: "Cape Verde", score1: null, score2: null, revealed: false },
+  { id: 44, group: "H", matchday: 5, date: "2026-06-15", time: "21:00", venue: "Hard Rock Stadium, Miami", team1: "Saudi Arabia", team2: "Uruguay", score1: null, score2: null, revealed: false },
+  { id: 45, group: "H", matchday: 11, date: "2026-06-21", time: "18:00", venue: "Mercedes-Benz Stadium, Atlanta", team1: "Spain", team2: "Saudi Arabia", score1: null, score2: null, revealed: false },
+  { id: 46, group: "H", matchday: 11, date: "2026-06-21", time: "21:00", venue: "Hard Rock Stadium, Miami", team1: "Uruguay", team2: "Cape Verde", score1: null, score2: null, revealed: false },
+  { id: 47, group: "H", matchday: 16, date: "2026-06-26", time: "18:00", venue: "NRG Stadium, Houston", team1: "Cape Verde", team2: "Saudi Arabia", score1: null, score2: null, revealed: false },
+  { id: 48, group: "H", matchday: 16, date: "2026-06-26", time: "18:00", venue: "Estadio Akron, Guadalajara", team1: "Uruguay", team2: "Spain", score1: null, score2: null, revealed: false },
+  { id: 49, group: "I", matchday: 6, date: "2026-06-16", time: "12:00", venue: "MetLife Stadium, New Jersey", team1: "France", team2: "Senegal", score1: null, score2: null, revealed: false },
+  { id: 50, group: "I", matchday: 6, date: "2026-06-16", time: "15:00", venue: "Gillette Stadium, Boston", team1: "Iraq", team2: "Norway", score1: null, score2: null, revealed: false },
+  { id: 51, group: "I", matchday: 12, date: "2026-06-22", time: "12:00", venue: "Lincoln Financial Field, Philadelphia", team1: "France", team2: "Iraq", score1: null, score2: null, revealed: false },
+  { id: 52, group: "I", matchday: 12, date: "2026-06-22", time: "15:00", venue: "MetLife Stadium, New Jersey", team1: "Norway", team2: "Senegal", score1: null, score2: null, revealed: false },
+  { id: 53, group: "I", matchday: 16, date: "2026-06-26", time: "21:00", venue: "Gillette Stadium, Boston", team1: "Norway", team2: "France", score1: null, score2: null, revealed: false },
+  { id: 54, group: "I", matchday: 16, date: "2026-06-26", time: "21:00", venue: "BMO Field, Toronto", team1: "Senegal", team2: "Iraq", score1: null, score2: null, revealed: false },
+  { id: 55, group: "J", matchday: 6, date: "2026-06-16", time: "18:00", venue: "Arrowhead Stadium, Kansas City", team1: "Argentina", team2: "Algeria", score1: null, score2: null, revealed: false },
+  { id: 56, group: "J", matchday: 6, date: "2026-06-16", time: "21:00", venue: "Levi's Stadium, San Francisco", team1: "Austria", team2: "Jordan", score1: null, score2: null, revealed: false },
+  { id: 57, group: "J", matchday: 12, date: "2026-06-22", time: "18:00", venue: "AT&T Stadium, Dallas", team1: "Argentina", team2: "Austria", score1: null, score2: null, revealed: false },
+  { id: 58, group: "J", matchday: 12, date: "2026-06-22", time: "21:00", venue: "Levi's Stadium, San Francisco", team1: "Jordan", team2: "Algeria", score1: null, score2: null, revealed: false },
+  { id: 59, group: "J", matchday: 17, date: "2026-06-27", time: "15:00", venue: "Arrowhead Stadium, Kansas City", team1: "Algeria", team2: "Austria", score1: null, score2: null, revealed: false },
+  { id: 60, group: "J", matchday: 17, date: "2026-06-27", time: "15:00", venue: "AT&T Stadium, Dallas", team1: "Jordan", team2: "Argentina", score1: null, score2: null, revealed: false },
+  { id: 61, group: "K", matchday: 7, date: "2026-06-17", time: "12:00", venue: "NRG Stadium, Houston", team1: "Portugal", team2: "DR Congo", score1: null, score2: null, revealed: false },
+  { id: 62, group: "K", matchday: 7, date: "2026-06-17", time: "15:00", venue: "Estadio Azteca, Mexico City", team1: "Uzbekistan", team2: "Colombia", score1: null, score2: null, revealed: false },
+  { id: 63, group: "K", matchday: 13, date: "2026-06-23", time: "12:00", venue: "NRG Stadium, Houston", team1: "Portugal", team2: "Uzbekistan", score1: null, score2: null, revealed: false },
+  { id: 64, group: "K", matchday: 13, date: "2026-06-23", time: "15:00", venue: "Estadio Akron, Guadalajara", team1: "Colombia", team2: "DR Congo", score1: null, score2: null, revealed: false },
+  { id: 65, group: "K", matchday: 17, date: "2026-06-27", time: "18:00", venue: "Hard Rock Stadium, Miami", team1: "Colombia", team2: "Portugal", score1: null, score2: null, revealed: false },
+  { id: 66, group: "K", matchday: 17, date: "2026-06-27", time: "18:00", venue: "Mercedes-Benz Stadium, Atlanta", team1: "DR Congo", team2: "Uzbekistan", score1: null, score2: null, revealed: false },
+  { id: 67, group: "L", matchday: 7, date: "2026-06-17", time: "18:00", venue: "AT&T Stadium, Dallas", team1: "England", team2: "Croatia", score1: null, score2: null, revealed: false },
+  { id: 68, group: "L", matchday: 7, date: "2026-06-17", time: "21:00", venue: "BMO Field, Toronto", team1: "Ghana", team2: "Panama", score1: null, score2: null, revealed: false },
+  { id: 69, group: "L", matchday: 13, date: "2026-06-23", time: "18:00", venue: "Gillette Stadium, Boston", team1: "England", team2: "Ghana", score1: null, score2: null, revealed: false },
+  { id: 70, group: "L", matchday: 13, date: "2026-06-23", time: "21:00", venue: "BMO Field, Toronto", team1: "Panama", team2: "Croatia", score1: null, score2: null, revealed: false },
+  { id: 71, group: "L", matchday: 17, date: "2026-06-27", time: "21:00", venue: "MetLife Stadium, New Jersey", team1: "Panama", team2: "England", score1: null, score2: null, revealed: false },
+  { id: 72, group: "L", matchday: 17, date: "2026-06-27", time: "21:00", venue: "Lincoln Financial Field, Philadelphia", team1: "Croatia", team2: "Ghana", score1: null, score2: null, revealed: false }
 ];
 
       const stored = localStorage.getItem("world_cup_2026_matches");
@@ -1926,14 +1973,112 @@
       });
     }
 
+    // Helper to get today's date string in YYYY-MM-DD format (local system time)
+    function getTodayStr() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    // Initialize today button title with formatted date
+    function initTodayButton() {
+      const todayBtn = document.getElementById("today-btn");
+      if (todayBtn) {
+        const todayStr = getTodayStr();
+        const dateFormatted = new Date(todayStr + "T00:00:00").toLocaleDateString("en-US", {
+          month: 'long', day: 'numeric', year: 'numeric'
+        });
+        todayBtn.title = `Scroll to today's matches (${dateFormatted})`;
+      }
+    }
+
+    // Initialize time display mode from localStorage
+    function initTimeDisplayMode() {
+      const stored = localStorage.getItem("time_display_mode");
+      if (stored === "venue" || stored === "local") {
+        state.timeDisplayMode = stored;
+      }
+    }
+
+    // Parse a date and time string in a given timezone to a JS Date object
+    function getLocalDateFromTimeZone(dateStr, timeStr, timeZone) {
+      const dateString = `${dateStr}T${timeStr}:00`;
+      const dateUtc = new Date(dateString + 'Z');
+      try {
+        const formatter = new Intl.DateTimeFormat('en-US', {
+          timeZone: timeZone,
+          year: 'numeric', month: 'numeric', day: 'numeric',
+          hour: 'numeric', minute: 'numeric', second: 'numeric',
+          hour12: false
+        });
+        const parts = formatter.formatToParts(dateUtc);
+        const partValues = {};
+        parts.forEach(p => partValues[p.type] = p.value);
+        const year = parseInt(partValues.year);
+        const month = parseInt(partValues.month) - 1;
+        const day = parseInt(partValues.day);
+        const hour = parseInt(partValues.hour);
+        const minute = parseInt(partValues.minute);
+        const formattedUtc = Date.UTC(year, month, day, hour, minute);
+        const originalUtc = dateUtc.getTime();
+        const offset = formattedUtc - originalUtc;
+        return new Date(originalUtc - offset);
+      } catch (e) {
+        console.error("Timezone formatting error:", e);
+        return new Date(dateString);
+      }
+    }
+
+    // Format to HH:MM in user's local system timezone
+    function formatToSystemLocalTime(date) {
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+    }
+
+    // Get time display string for matches grid
+    function getMatchTimeDisplay(m) {
+      const timeZone = venueTimezones[m.venue];
+      if (!timeZone) {
+        return `${m.time} (Venue)`;
+      }
+      if (state.timeDisplayMode === "local") {
+        const dateObj = getLocalDateFromTimeZone(m.date, m.time, timeZone);
+        const timeFormatted = formatToSystemLocalTime(dateObj);
+        return `${timeFormatted} (My Time)`;
+      } else {
+        return `${m.time} (Venue)`;
+      }
+    }
+
+    // Get time display string for venues matches list
+    function getVenueMatchTimeDisplay(m) {
+      const timeZone = venueTimezones[m.venue];
+      if (!timeZone || state.timeDisplayMode === "venue") {
+        return m.time;
+      }
+      const dateObj = getLocalDateFromTimeZone(m.date, m.time, timeZone);
+      return formatToSystemLocalTime(dateObj);
+    }
+
+    // Toggle time display mode between "venue" and "local"
+    function toggleTimeDisplayMode() {
+      state.timeDisplayMode = state.timeDisplayMode === "venue" ? "local" : "venue";
+      localStorage.setItem("time_display_mode", state.timeDisplayMode);
+      renderMatches();
+      if (state.activeTab === "venues") {
+        renderVenuesTab();
+      }
+    }
+
     // Scroll directly to today's matches
     function scrollToToday() {
       if (state.activeTab !== "matches") {
         switchTab("matches");
       }
 
-      // Today's date in local system time format: "2026-06-15"
-      const todayStr = "2026-06-15";
+      // Today's date in local system time format
+      const todayStr = getTodayStr();
       
       // Clear filters if they are currently blocking the view
       let filtersChanged = false;
@@ -2326,11 +2471,21 @@
           weekday: 'long', month: 'short', day: 'numeric', year: 'numeric'
         });
 
+        // Sort matches on the same date chronologically by actual UTC time, then group, then id
+        const sortedMatches = [...byDate[date]].sort((a, b) => {
+          const aTime = getLocalDateFromTimeZone(a.date, a.time, venueTimezones[a.venue] || "UTC").getTime();
+          const bTime = getLocalDateFromTimeZone(b.date, b.time, venueTimezones[b.venue] || "UTC").getTime();
+          if (aTime !== bTime) return aTime - bTime;
+          const groupCompare = (a.group || "").localeCompare(b.group || "");
+          if (groupCompare !== 0) return groupCompare;
+          return a.id - b.id;
+        });
+
         html += `
           <div class="date-section" id="date-section-${date}">
             <h3 class="date-header">${dateFormatted}</h3>
             <div class="match-grid">
-              ${byDate[date].map(m => getMatchCardHtml(m)).join("")}
+              ${sortedMatches.map(m => getMatchCardHtml(m)).join("")}
             </div>
           </div>
         `;
@@ -2343,6 +2498,7 @@
       const isCompleted = m.score1 !== null && m.score2 !== null;
       const flag1 = teamFlags[m.team1] || "🏳️";
       const flag2 = teamFlags[m.team2] || "🏳️";
+      const timeString = getMatchTimeDisplay(m);
       
       let statusClass = "status-upcoming";
       let statusLabel = "Upcoming";
@@ -2425,6 +2581,9 @@
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
               </svg>
               <span class="venue-text">${m.venue}</span>
+            </div>
+            <div class="match-time-footer" onclick="toggleTimeDisplayMode()" title="Click to toggle between venue local time and your local time">
+              🕒 ${timeString}
             </div>
           </div>
         </div>
@@ -2645,7 +2804,14 @@
 
       let html = "";
       stadiums.forEach(stadium => {
-        const venueMatches = state.matches.filter(m => m.venue === stadium.name);
+        // Filter and sort venue matches chronologically by actual UTC time
+        const venueMatches = state.matches
+          .filter(m => m.venue === stadium.name)
+          .sort((a, b) => {
+            const aTime = getLocalDateFromTimeZone(a.date, a.time, venueTimezones[a.venue] || "UTC").getTime();
+            const bTime = getLocalDateFromTimeZone(b.date, b.time, venueTimezones[b.venue] || "UTC").getTime();
+            return aTime - bTime;
+          });
 
         html += `
           <div class="venue-card">
@@ -2669,9 +2835,14 @@
                   const scoreStr = isComp ? (m.revealed ? `${m.score1} - ${m.score2}` : "Hidden") : "Upcoming";
                   const flag1 = teamFlags[m.team1] || "🏳️";
                   const flag2 = teamFlags[m.team2] || "🏳️";
+                  const dateShort = new Date(m.date + "T00:00:00").toLocaleDateString("en-US", {
+                    month: 'numeric', day: 'numeric'
+                  });
+                  const timeDisplay = getVenueMatchTimeDisplay(m);
                   return `
-                    <div class="venue-match-item">
+                    <div class="venue-match-item" onclick="toggleTimeDisplayMode()" title="Click to toggle between venue local time and your local time" style="cursor: pointer;">
                       <span class="venue-match-teams" title="${m.team1} vs ${m.team2}">
+                        <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal; margin-right: 6px;">${dateShort} ${timeDisplay}</span>
                         ${flag1} ${m.team1.substring(0,3).toUpperCase()} vs ${flag2} ${m.team2.substring(0,3).toUpperCase()}
                       </span>
                       <span class="venue-match-score">${scoreStr}</span>
@@ -2869,7 +3040,9 @@
     // Page Load
     window.addEventListener("DOMContentLoaded", () => {
       initTheme();
+      initTimeDisplayMode();
       initMatches();
+      initTodayButton();
       updateHeaderStats();
       renderMatches();
       renderQualifiersWidget();

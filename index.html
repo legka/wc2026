@@ -1435,6 +1435,154 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* ===== Knockout Bracket ===== */
+    .ko-tab-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .ko-tab-header h2 { font-weight: 800; }
+    .ko-legend { font-size: 0.85rem; color: var(--text-secondary); max-width: 760px; }
+    .ko-bracket-scroll { overflow-x: auto; padding: 8px 2px 20px; }
+    .ko-bracket { display: flex; gap: 22px; min-width: max-content; align-items: stretch; }
+    .ko-round { display: flex; flex-direction: column; min-width: 210px; flex: 0 0 auto; }
+    .ko-round-title {
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 7px 10px;
+      border-radius: 8px;
+      background: var(--accent-color-light);
+      color: var(--accent-color);
+      margin-bottom: 12px;
+      white-space: nowrap;
+    }
+    .ko-round-matches {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      justify-content: space-around;
+      flex: 1;
+    }
+    .ko-round.ko-final-col .ko-round-title { background: linear-gradient(135deg, var(--accent-color), #ec4899); color: #fff; }
+    .ko-round.ko-third-col .ko-round-title { background: var(--warning-bg); color: var(--warning-color); }
+
+    .ko-match {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: box-shadow var(--transition-fast);
+    }
+    .ko-match:hover { box-shadow: var(--shadow-md); }
+    .ko-final-col .ko-match { border-color: var(--accent-color); box-shadow: 0 0 0 2px var(--accent-color-light); }
+
+    .ko-match-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-primary);
+    }
+    .ko-match-no { font-weight: 700; color: var(--text-secondary); }
+    .ko-match-when {
+      flex: 1;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ko-status { font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+    .ko-status-done { background: var(--success-bg); color: var(--success-color); }
+    .ko-status-tbd { background: var(--bg-input); color: var(--text-muted); }
+
+    .ko-team-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-top: 1px solid var(--border-color);
+    }
+    .ko-team-row:first-of-type { border-top: none; }
+    .ko-team-flag { font-size: 1.1rem; width: 22px; text-align: center; flex: 0 0 auto; }
+    .ko-team-name {
+      flex: 1;
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ko-team-name.tbd { color: var(--text-muted); font-weight: 500; }
+    .ko-team-slot {
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      background: var(--bg-input);
+      padding: 1px 6px;
+      border-radius: 6px;
+      white-space: nowrap;
+      flex: 1;
+    }
+    .ko-team-row.ko-winner { background: var(--success-bg); }
+    .ko-team-row.ko-winner .ko-team-name { color: var(--success-color); }
+    .ko-team-row.ko-loser { opacity: 0.5; }
+
+    .ko-score { width: 44px; flex: 0 0 auto; text-align: center; }
+    .ko-score input {
+      width: 44px;
+      padding: 5px 6px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+    .ko-score input:focus { outline: none; border-color: var(--accent-color); box-shadow: 0 0 0 2px var(--accent-color-light); }
+
+    .ko-pens-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      background: var(--warning-bg);
+    }
+    .ko-pens-label { font-size: 0.68rem; color: var(--warning-color); font-weight: 700; }
+    .ko-pen-input {
+      width: 36px;
+      padding: 3px 5px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      background: var(--bg-input);
+      color: var(--text-primary);
+      font-weight: 700;
+      text-align: center;
+    }
+    .ko-pen-input:focus { outline: none; border-color: var(--warning-color); }
+
+    .ko-empty { text-align: center; color: var(--text-muted); padding: 40px 20px; }
+
+    @media (max-width: 920px) {
+      .ko-bracket { flex-direction: column; min-width: 0; gap: 14px; }
+      .ko-round { min-width: 0; }
+      .ko-round-matches { gap: 12px; }
+      .ko-team-name { font-size: 0.85rem; }
+      .ko-team-slot { font-size: 0.62rem; }
+    }
   </style>
 </head>
 <body>
@@ -1510,6 +1658,7 @@
       <button class="nav-tab active" onclick="switchTab('matches')" id="tab-matches">📅 Match Schedule</button>
       <button class="nav-tab" onclick="switchTab('groups')" id="tab-groups">📊 Group Tables</button>
       <button class="nav-tab" onclick="switchTab('third-place')" id="tab-third-place">🥉 3rd-Place Standings</button>
+      <button class="nav-tab" onclick="switchTab('knockout')" id="tab-knockout">🏆 Knockout Bracket</button>
       <button class="nav-tab" onclick="switchTab('venues')" id="tab-venues">🏟️ Stadiums & Venues</button>
       <button class="nav-tab" onclick="switchTab('stats')" id="tab-stats">📈 Tournament Stats</button>
     </nav>
@@ -1608,6 +1757,15 @@
           </tbody>
         </table>
       </div>
+    </div>
+
+    <!-- Knockout Bracket Tab Content -->
+    <div id="content-knockout" class="tab-content">
+      <div class="ko-tab-header">
+        <h2 style="font-weight: 800;">Knockout Bracket</h2>
+        <span class="ko-legend">💡 Teams auto-seed from the group stage as scores are revealed. Winners &amp; runners-up of each group, plus the 8 best third-placed teams, fill the Round of 32 per the official FIFA 2026 schedule (Annex C combination table). Enter knockout scores (and penalties if tied) to advance winners through the bracket.</span>
+      </div>
+      <div id="knockout-bracket-root"></div>
     </div>
 
     <!-- Stadiums & Venues Tab Content -->
@@ -1748,6 +1906,7 @@
     // Core State Object
     let state = {
       matches: [],
+      knockout: [],
       activeTab: "matches",
       groupViewMode: "grid",
       focusGroup: "A",
@@ -2358,7 +2517,9 @@
 
     function resetTournament() {
       localStorage.removeItem("world_cup_2026_matches");
+      localStorage.removeItem("world_cup_2026_knockout");
       initMatches();
+      initKnockout();
       if (state.activeTab === "matches") {
         renderMatches();
       } else {
@@ -2375,6 +2536,8 @@
         renderGroupsTab();
       } else if (state.activeTab === "third-place") {
         renderThirdPlaceTab();
+      } else if (state.activeTab === "knockout") {
+        renderKnockoutTab();
       } else if (state.activeTab === "stats") {
         renderStatsTab();
       }
@@ -2404,6 +2567,8 @@
         renderGroupsTab();
       } else if (tabName === "third-place") {
         renderThirdPlaceTab();
+      } else if (tabName === "knockout") {
+        renderKnockoutTab();
       } else if (tabName === "venues") {
         renderVenuesTab();
       } else if (tabName === "stats") {
@@ -3028,11 +3193,385 @@
       }
     }
 
+    // ===== KNOCKOUT STAGE =====
+    // 3rd-place combination table (FIFA WC 2026 Annex C). Key = sorted string of the
+    // 4 group letters whose 3rd-placed teams did NOT qualify. Value = array of 8 group
+    // letters, each the 3rd-placed group assigned to a Round-of-32 3rd-place slot, in
+    // column order: [M79, M85, M81, M74, M82, M77, M87, M80].
+    const THIRD_PLACE_COMBINATIONS = {"ABCD":["E","J","I","F","H","G","L","K"],"ABCE":["H","G","I","D","J","F","L","K"],"ABCF":["E","J","I","D","H","G","L","K"],"ABCG":["E","J","I","D","H","F","L","K"],"ABCH":["E","G","I","D","J","F","L","K"],"ABCI":["E","G","J","D","H","F","L","K"],"ABCJ":["E","G","I","D","H","F","L","K"],"ABCK":["E","G","J","D","H","F","L","I"],"ABCL":["E","G","J","D","H","F","I","K"],"ABDE":["H","G","I","C","J","F","L","K"],"ABDF":["E","J","I","C","H","G","L","K"],"ABDG":["E","J","I","C","H","F","L","K"],"ABDH":["E","G","I","C","J","F","L","K"],"ABDI":["E","G","J","C","H","F","L","K"],"ABDJ":["E","G","I","C","H","F","L","K"],"ABDK":["E","G","J","C","H","F","L","I"],"ABDL":["E","G","J","C","H","F","I","K"],"ABEF":["H","G","I","C","J","D","L","K"],"ABEG":["C","J","I","D","H","F","L","K"],"ABEH":["C","G","I","D","J","F","L","K"],"ABEI":["C","G","J","D","H","F","L","K"],"ABEJ":["C","G","I","D","H","F","L","K"],"ABEK":["C","G","J","D","H","F","L","I"],"ABEL":["C","G","J","D","H","F","I","K"],"ABFG":["E","J","I","C","H","D","L","K"],"ABFH":["E","G","I","C","J","D","L","K"],"ABFI":["E","G","J","C","H","D","L","K"],"ABFJ":["E","G","I","C","H","D","L","K"],"ABFK":["E","G","J","C","H","D","L","I"],"ABFL":["E","G","J","C","H","D","I","K"],"ABGH":["C","J","E","D","I","F","L","K"],"ABGI":["C","J","E","D","H","F","L","K"],"ABGJ":["C","E","I","D","H","F","L","K"],"ABGK":["C","J","E","D","H","F","L","I"],"ABGL":["C","J","E","D","H","F","I","K"],"ABHI":["C","G","E","D","J","F","L","K"],"ABHJ":["C","G","E","D","I","F","L","K"],"ABHK":["C","G","E","D","J","F","L","I"],"ABHL":["C","G","E","D","J","F","I","K"],"ABIJ":["C","G","E","D","H","F","L","K"],"ABIK":["C","G","J","D","H","F","L","E"],"ABIL":["C","G","J","D","H","F","E","K"],"ABJK":["C","G","E","D","H","F","L","I"],"ABJL":["C","G","E","D","H","F","I","K"],"ABKL":["C","G","J","D","H","F","E","I"],"ACDE":["H","J","B","F","I","G","L","K"],"ACDF":["E","J","I","B","H","G","L","K"],"ACDG":["E","J","B","F","I","H","L","K"],"ACDH":["E","J","B","F","I","G","L","K"],"ACDI":["E","J","B","F","H","G","L","K"],"ACDJ":["E","G","B","F","I","H","L","K"],"ACDK":["E","J","B","F","H","G","L","I"],"ACDL":["E","J","B","F","H","G","I","K"],"ACEF":["H","J","B","D","I","G","L","K"],"ACEG":["H","J","B","D","I","F","L","K"],"ACEH":["I","G","B","D","J","F","L","K"],"ACEI":["H","G","B","D","J","F","L","K"],"ACEJ":["H","G","B","D","I","F","L","K"],"ACEK":["H","G","B","D","J","F","L","I"],"ACEL":["H","G","B","D","J","F","I","K"],"ACFG":["E","J","B","D","I","H","L","K"],"ACFH":["E","J","B","D","I","G","L","K"],"ACFI":["E","J","B","D","H","G","L","K"],"ACFJ":["E","G","B","D","I","H","L","K"],"ACFK":["E","J","B","D","H","G","L","I"],"ACFL":["E","J","B","D","H","G","I","K"],"ACGH":["E","J","B","D","I","F","L","K"],"ACGI":["E","J","B","D","H","F","L","K"],"ACGJ":["E","I","B","D","H","F","L","K"],"ACGK":["E","J","B","D","H","F","L","I"],"ACGL":["E","J","B","D","H","F","I","K"],"ACHI":["E","G","B","D","J","F","L","K"],"ACHJ":["E","G","B","D","I","F","L","K"],"ACHK":["E","G","B","D","J","F","L","I"],"ACHL":["E","G","B","D","J","F","I","K"],"ACIJ":["E","G","B","D","H","F","L","K"],"ACIK":["H","G","B","D","J","F","L","E"],"ACIL":["H","G","B","D","J","F","E","K"],"ACJK":["E","G","B","D","H","F","L","I"],"ACJL":["E","G","B","D","H","F","I","K"],"ACKL":["H","G","B","D","J","F","E","I"],"ADEF":["H","J","B","C","I","G","L","K"],"ADEG":["H","J","B","C","I","F","L","K"],"ADEH":["I","G","B","C","J","F","L","K"],"ADEI":["H","G","B","C","J","F","L","K"],"ADEJ":["H","G","B","C","I","F","L","K"],"ADEK":["H","G","B","C","J","F","L","I"],"ADEL":["H","G","B","C","J","F","I","K"],"ADFG":["E","J","B","C","I","H","L","K"],"ADFH":["E","J","B","C","I","G","L","K"],"ADFI":["E","J","B","C","H","G","L","K"],"ADFJ":["E","G","B","C","I","H","L","K"],"ADFK":["E","J","B","C","H","G","L","I"],"ADFL":["E","J","B","C","H","G","I","K"],"ADGH":["E","J","B","C","I","F","L","K"],"ADGI":["E","J","B","C","H","F","L","K"],"ADGJ":["E","I","B","C","H","F","L","K"],"ADGK":["E","J","B","C","H","F","L","I"],"ADGL":["E","J","B","C","H","F","I","K"],"ADHI":["E","G","B","C","J","F","L","K"],"ADHJ":["E","G","B","C","I","F","L","K"],"ADHK":["E","G","B","C","J","F","L","I"],"ADHL":["E","G","B","C","J","F","I","K"],"ADIJ":["E","G","B","C","H","F","L","K"],"ADIK":["H","G","B","C","J","F","L","E"],"ADIL":["H","G","B","C","J","F","E","K"],"ADJK":["E","G","B","C","H","F","L","I"],"ADJL":["E","G","B","C","H","F","I","K"],"ADKL":["H","G","B","C","J","F","E","I"],"AEFG":["H","J","B","C","I","D","L","K"],"AEFH":["I","G","B","C","J","D","L","K"],"AEFI":["H","G","B","C","J","D","L","K"],"AEFJ":["H","G","B","C","I","D","L","K"],"AEFK":["H","G","B","C","J","D","L","I"],"AEFL":["H","G","B","C","J","D","I","K"],"AEGH":["C","J","B","D","I","F","L","K"],"AEGI":["C","J","B","D","H","F","L","K"],"AEGJ":["C","I","B","D","H","F","L","K"],"AEGK":["C","J","B","D","H","F","L","I"],"AEGL":["C","J","B","D","H","F","I","K"],"AEHI":["C","G","B","D","J","F","L","K"],"AEHJ":["C","G","B","D","I","F","L","K"],"AEHK":["C","G","B","D","J","F","L","I"],"AEHL":["C","G","B","D","J","F","I","K"],"AEIJ":["C","G","B","D","H","F","L","K"],"AEIK":["C","G","B","D","H","F","L","J"],"AEIL":["H","G","B","C","J","F","D","K"],"AEJK":["C","G","B","D","H","F","L","I"],"AEJL":["C","G","B","D","H","F","I","K"],"AEKL":["H","G","B","C","J","F","D","I"],"AFGH":["E","J","B","C","I","D","L","K"],"AFGI":["E","J","B","C","H","D","L","K"],"AFGJ":["E","I","B","C","H","D","L","K"],"AFGK":["E","J","B","C","H","D","L","I"],"AFGL":["E","J","B","C","H","D","I","K"],"AFHI":["E","G","B","C","J","D","L","K"],"AFHJ":["E","G","B","C","I","D","L","K"],"AFHK":["E","G","B","C","J","D","L","I"],"AFHL":["E","G","B","C","J","D","I","K"],"AFIJ":["E","G","B","C","H","D","L","K"],"AFIK":["H","G","B","C","J","D","L","E"],"AFIL":["H","G","B","C","J","D","E","K"],"AFJK":["E","G","B","C","H","D","L","I"],"AFJL":["E","G","B","C","H","D","I","K"],"AFKL":["H","G","B","C","J","D","E","I"],"AGHI":["C","J","B","D","E","F","L","K"],"AGHJ":["C","E","B","D","I","F","L","K"],"AGHK":["C","J","B","D","E","F","L","I"],"AGHL":["C","J","B","D","E","F","I","K"],"AGIJ":["C","E","B","D","H","F","L","K"],"AGIK":["C","J","B","D","H","F","L","E"],"AGIL":["C","J","B","D","H","F","E","K"],"AGJK":["C","E","B","D","H","F","L","I"],"AGJL":["C","E","B","D","H","F","I","K"],"AGKL":["C","J","B","D","H","F","E","I"],"AHIJ":["C","G","B","D","E","F","L","K"],"AHIK":["C","G","B","D","J","F","L","E"],"AHIL":["C","G","B","D","J","F","E","K"],"AHJK":["C","G","B","D","E","F","L","I"],"AHJL":["C","G","B","D","E","F","I","K"],"AHKL":["C","G","B","D","J","F","E","I"],"AIJK":["C","G","B","D","H","F","L","E"],"AIJL":["C","G","B","D","H","F","E","K"],"AIKL":["H","G","B","C","J","F","D","E"],"AJKL":["C","G","B","D","H","F","E","I"],"BCDE":["H","J","I","F","A","G","L","K"],"BCDF":["E","J","I","A","H","G","L","K"],"BCDG":["E","J","I","F","A","H","L","K"],"BCDH":["E","J","I","F","A","G","L","K"],"BCDI":["E","G","J","F","A","H","L","K"],"BCDJ":["E","G","I","F","A","H","L","K"],"BCDK":["E","G","J","F","A","H","L","I"],"BCDL":["E","G","J","F","A","H","I","K"],"BCEF":["H","J","I","D","A","G","L","K"],"BCEG":["H","J","I","D","A","F","L","K"],"BCEH":["I","G","J","D","A","F","L","K"],"BCEI":["H","G","J","D","A","F","L","K"],"BCEJ":["H","G","I","D","A","F","L","K"],"BCEK":["H","G","J","D","A","F","L","I"],"BCEL":["H","G","J","D","A","F","I","K"],"BCFG":["E","J","I","D","A","H","L","K"],"BCFH":["E","J","I","D","A","G","L","K"],"BCFI":["E","G","J","D","A","H","L","K"],"BCFJ":["E","G","I","D","A","H","L","K"],"BCFK":["E","G","J","D","A","H","L","I"],"BCFL":["E","G","J","D","A","H","I","K"],"BCGH":["E","J","I","D","A","F","L","K"],"BCGI":["H","J","E","D","A","F","L","K"],"BCGJ":["H","E","I","D","A","F","L","K"],"BCGK":["H","J","E","D","A","F","L","I"],"BCGL":["H","J","E","D","A","F","I","K"],"BCHI":["E","G","J","D","A","F","L","K"],"BCHJ":["E","G","I","D","A","F","L","K"],"BCHK":["E","G","J","D","A","F","L","I"],"BCHL":["E","G","J","D","A","F","I","K"],"BCIJ":["H","G","E","D","A","F","L","K"],"BCIK":["H","G","J","D","A","F","L","E"],"BCIL":["H","G","J","D","A","F","E","K"],"BCJK":["H","G","E","D","A","F","L","I"],"BCJL":["H","G","E","D","A","F","I","K"],"BCKL":["H","G","J","D","A","F","E","I"],"BDEF":["H","J","I","C","A","G","L","K"],"BDEG":["H","J","I","C","A","F","L","K"],"BDEH":["I","G","J","C","A","F","L","K"],"BDEI":["H","G","J","C","A","F","L","K"],"BDEJ":["H","G","I","C","A","F","L","K"],"BDEK":["H","G","J","C","A","F","L","I"],"BDEL":["H","G","J","C","A","F","I","K"],"BDFG":["E","J","I","C","A","H","L","K"],"BDFH":["E","J","I","C","A","G","L","K"],"BDFI":["E","G","J","C","A","H","L","K"],"BDFJ":["E","G","I","C","A","H","L","K"],"BDFK":["E","G","J","C","A","H","L","I"],"BDFL":["E","G","J","C","A","H","I","K"],"BDGH":["E","J","I","C","A","F","L","K"],"BDGI":["H","J","E","C","A","F","L","K"],"BDGJ":["H","E","I","C","A","F","L","K"],"BDGK":["H","J","E","C","A","F","L","I"],"BDGL":["H","J","E","C","A","F","I","K"],"BDHI":["E","G","J","C","A","F","L","K"],"BDHJ":["E","G","I","C","A","F","L","K"],"BDHK":["E","G","J","C","A","F","L","I"],"BDHL":["E","G","J","C","A","F","I","K"],"BDIJ":["H","G","E","C","A","F","L","K"],"BDIK":["H","G","J","C","A","F","L","E"],"BDIL":["H","G","J","C","A","F","E","K"],"BDJK":["H","G","E","C","A","F","L","I"],"BDJL":["H","G","E","C","A","F","I","K"],"BDKL":["H","G","J","C","A","F","E","I"],"BEFG":["H","J","I","C","A","D","L","K"],"BEFH":["I","G","J","C","A","D","L","K"],"BEFI":["H","G","J","C","A","D","L","K"],"BEFJ":["H","G","I","C","A","D","L","K"],"BEFK":["H","G","J","C","A","D","L","I"],"BEFL":["H","G","J","C","A","D","I","K"],"BEGH":["C","J","I","D","A","F","L","K"],"BEGI":["H","J","F","C","A","D","L","K"],"BEGJ":["H","F","I","C","A","D","L","K"],"BEGK":["H","J","F","C","A","D","L","I"],"BEGL":["H","J","F","C","A","D","I","K"],"BEHI":["C","G","J","D","A","F","L","K"],"BEHJ":["C","G","I","D","A","F","L","K"],"BEHK":["C","G","J","D","A","F","L","I"],"BEHL":["C","G","J","D","A","F","I","K"],"BEIJ":["H","G","F","C","A","D","L","K"],"BEIK":["C","G","J","D","A","F","L","H"],"BEIL":["H","G","J","C","A","F","D","K"],"BEJK":["H","G","F","C","A","D","L","I"],"BEJL":["H","G","F","C","A","D","I","K"],"BEKL":["H","G","J","C","A","F","D","I"],"BFGH":["E","J","I","C","A","D","L","K"],"BFGI":["H","J","E","C","A","D","L","K"],"BFGJ":["H","E","I","C","A","D","L","K"],"BFGK":["H","J","E","C","A","D","L","I"],"BFGL":["H","J","E","C","A","D","I","K"],"BFHI":["E","G","J","C","A","D","L","K"],"BFHJ":["E","G","I","C","A","D","L","K"],"BFHK":["E","G","J","C","A","D","L","I"],"BFHL":["E","G","J","C","A","D","I","K"],"BFIJ":["H","G","E","C","A","D","L","K"],"BFIK":["H","G","J","C","A","D","L","E"],"BFIL":["H","G","J","C","A","D","E","K"],"BFJK":["H","G","E","C","A","D","L","I"],"BFJL":["H","G","E","C","A","D","I","K"],"BFKL":["H","G","J","C","A","D","E","I"],"BGHI":["C","J","E","D","A","F","L","K"],"BGHJ":["C","E","I","D","A","F","L","K"],"BGHK":["C","J","E","D","A","F","L","I"],"BGHL":["C","J","E","D","A","F","I","K"],"BGIJ":["H","E","F","C","A","D","L","K"],"BGIK":["H","J","F","C","A","D","L","E"],"BGIL":["H","J","E","C","A","F","D","K"],"BGJK":["H","E","F","C","A","D","L","I"],"BGJL":["H","E","F","C","A","D","I","K"],"BGKL":["H","J","E","C","A","F","D","I"],"BHIJ":["C","G","E","D","A","F","L","K"],"BHIK":["C","G","J","D","A","F","L","E"],"BHIL":["C","G","J","D","A","F","E","K"],"BHJK":["C","G","E","D","A","F","L","I"],"BHJL":["C","G","E","D","A","F","I","K"],"BHKL":["C","G","J","D","A","F","E","I"],"BIJK":["H","G","F","C","A","D","L","E"],"BIJL":["H","G","E","C","A","F","D","K"],"BIKL":["H","G","J","C","A","F","D","E"],"BJKL":["H","G","E","C","A","F","D","I"],"CDEF":["H","J","B","A","I","G","L","K"],"CDEG":["H","J","B","A","I","F","L","K"],"CDEH":["I","J","B","F","A","G","L","K"],"CDEI":["H","J","B","F","A","G","L","K"],"CDEJ":["H","G","B","A","I","F","L","K"],"CDEK":["H","J","B","F","A","G","L","I"],"CDEL":["H","J","B","F","A","G","I","K"],"CDFG":["E","J","B","A","I","H","L","K"],"CDFH":["E","J","B","A","I","G","L","K"],"CDFI":["E","J","B","A","H","G","L","K"],"CDFJ":["E","G","B","A","I","H","L","K"],"CDFK":["E","J","B","A","H","G","L","I"],"CDFL":["E","J","B","A","H","G","I","K"],"CDGH":["E","J","B","A","I","F","L","K"],"CDGI":["E","J","B","F","A","H","L","K"],"CDGJ":["E","I","B","F","A","H","L","K"],"CDGK":["E","J","B","F","A","H","L","I"],"CDGL":["E","J","B","F","A","H","I","K"],"CDHI":["E","J","B","F","A","G","L","K"],"CDHJ":["E","G","B","A","I","F","L","K"],"CDHK":["E","J","B","F","A","G","L","I"],"CDHL":["E","J","B","F","A","G","I","K"],"CDIJ":["E","G","B","F","A","H","L","K"],"CDIK":["H","J","B","F","A","G","L","E"],"CDIL":["H","J","B","F","A","G","E","K"],"CDJK":["E","G","B","F","A","H","L","I"],"CDJL":["E","G","B","F","A","H","I","K"],"CDKL":["H","J","B","F","A","G","E","I"],"CEFG":["I","J","B","D","A","H","L","K"],"CEFH":["I","J","B","D","A","G","L","K"],"CEFI":["H","J","B","D","A","G","L","K"],"CEFJ":["I","G","B","D","A","H","L","K"],"CEFK":["H","J","B","D","A","G","L","I"],"CEFL":["H","J","B","D","A","G","I","K"],"CEGH":["I","J","B","D","A","F","L","K"],"CEGI":["H","J","B","D","A","F","L","K"],"CEGJ":["H","I","B","D","A","F","L","K"],"CEGK":["H","J","B","D","A","F","L","I"],"CEGL":["H","J","B","D","A","F","I","K"],"CEHI":["F","J","B","D","A","G","L","K"],"CEHJ":["I","G","B","D","A","F","L","K"],"CEHK":["F","J","B","D","A","G","L","I"],"CEHL":["F","J","B","D","A","G","I","K"],"CEIJ":["H","G","B","D","A","F","L","K"],"CEIK":["H","G","B","D","A","F","L","J"],"CEIL":["H","G","B","D","A","F","J","K"],"CEJK":["H","G","B","D","A","F","L","I"],"CEJL":["H","G","B","D","A","F","I","K"],"CEKL":["H","G","B","D","A","F","I","J"],"CFGH":["E","J","B","A","I","D","L","K"],"CFGI":["E","J","B","D","A","H","L","K"],"CFGJ":["E","I","B","D","A","H","L","K"],"CFGK":["E","J","B","D","A","H","L","I"],"CFGL":["E","J","B","D","A","H","I","K"],"CFHI":["E","J","B","D","A","G","L","K"],"CFHJ":["E","G","B","A","I","D","L","K"],"CFHK":["E","J","B","D","A","G","L","I"],"CFHL":["E","J","B","D","A","G","I","K"],"CFIJ":["E","G","B","D","A","H","L","K"],"CFIK":["H","J","B","D","A","G","L","E"],"CFIL":["H","J","B","D","A","G","E","K"],"CFJK":["E","G","B","D","A","H","L","I"],"CFJL":["E","G","B","D","A","H","I","K"],"CFKL":["H","J","B","D","A","G","E","I"],"CGHI":["E","J","B","D","A","F","L","K"],"CGHJ":["E","I","B","D","A","F","L","K"],"CGHK":["E","J","B","D","A","F","L","I"],"CGHL":["E","J","B","D","A","F","I","K"],"CGIJ":["H","E","B","D","A","F","L","K"],"CGIK":["H","J","B","D","A","F","L","E"],"CGIL":["H","J","B","D","A","F","E","K"],"CGJK":["H","E","B","D","A","F","L","I"],"CGJL":["H","E","B","D","A","F","I","K"],"CGKL":["H","J","B","D","A","F","E","I"],"CHIJ":["E","G","B","D","A","F","L","K"],"CHIK":["E","G","B","D","A","F","L","J"],"CHIL":["E","G","B","D","A","F","J","K"],"CHJK":["E","G","B","D","A","F","L","I"],"CHJL":["E","G","B","D","A","F","I","K"],"CHKL":["E","G","B","D","A","F","I","J"],"CIJK":["H","G","B","D","A","F","L","E"],"CIJL":["H","G","B","D","A","F","E","K"],"CIKL":["H","G","B","D","A","F","E","J"],"CJKL":["H","G","B","D","A","F","E","I"],"DEFG":["I","J","B","C","A","H","L","K"],"DEFH":["I","J","B","C","A","G","L","K"],"DEFI":["H","J","B","C","A","G","L","K"],"DEFJ":["I","G","B","C","A","H","L","K"],"DEFK":["H","J","B","C","A","G","L","I"],"DEFL":["H","J","B","C","A","G","I","K"],"DEGH":["I","J","B","C","A","F","L","K"],"DEGI":["H","J","B","C","A","F","L","K"],"DEGJ":["H","I","B","C","A","F","L","K"],"DEGK":["H","J","B","C","A","F","L","I"],"DEGL":["H","J","B","C","A","F","I","K"],"DEHI":["C","J","B","F","A","G","L","K"],"DEHJ":["I","G","B","C","A","F","L","K"],"DEHK":["C","J","B","F","A","G","L","I"],"DEHL":["C","J","B","F","A","G","I","K"],"DEIJ":["H","G","B","C","A","F","L","K"],"DEIK":["H","G","B","C","A","F","L","J"],"DEIL":["H","G","B","C","A","F","J","K"],"DEJK":["H","G","B","C","A","F","L","I"],"DEJL":["H","G","B","C","A","F","I","K"],"DEKL":["H","G","B","C","A","F","I","J"],"DFGH":["E","J","B","A","I","C","L","K"],"DFGI":["E","J","B","C","A","H","L","K"],"DFGJ":["E","I","B","C","A","H","L","K"],"DFGK":["E","J","B","C","A","H","L","I"],"DFGL":["E","J","B","C","A","H","I","K"],"DFHI":["E","J","B","C","A","G","L","K"],"DFHJ":["E","G","B","A","I","C","L","K"],"DFHK":["E","J","B","C","A","G","L","I"],"DFHL":["E","J","B","C","A","G","I","K"],"DFIJ":["E","G","B","C","A","H","L","K"],"DFIK":["H","J","B","C","A","G","L","E"],"DFIL":["H","J","B","C","A","G","E","K"],"DFJK":["E","G","B","C","A","H","L","I"],"DFJL":["E","G","B","C","A","H","I","K"],"DFKL":["H","J","B","C","A","G","E","I"],"DGHI":["E","J","B","C","A","F","L","K"],"DGHJ":["E","I","B","C","A","F","L","K"],"DGHK":["E","J","B","C","A","F","L","I"],"DGHL":["E","J","B","C","A","F","I","K"],"DGIJ":["H","E","B","C","A","F","L","K"],"DGIK":["H","J","B","C","A","F","L","E"],"DGIL":["H","J","B","C","A","F","E","K"],"DGJK":["H","E","B","C","A","F","L","I"],"DGJL":["H","E","B","C","A","F","I","K"],"DGKL":["H","J","B","C","A","F","E","I"],"DHIJ":["E","G","B","C","A","F","L","K"],"DHIK":["E","G","B","C","A","F","L","J"],"DHIL":["E","G","B","C","A","F","J","K"],"DHJK":["E","G","B","C","A","F","L","I"],"DHJL":["E","G","B","C","A","F","I","K"],"DHKL":["E","G","B","C","A","F","I","J"],"DIJK":["H","G","B","C","A","F","L","E"],"DIJL":["H","G","B","C","A","F","E","K"],"DIKL":["H","G","B","C","A","F","E","J"],"DJKL":["H","G","B","C","A","F","E","I"],"EFGH":["I","J","B","C","A","D","L","K"],"EFGI":["H","J","B","C","A","D","L","K"],"EFGJ":["H","I","B","C","A","D","L","K"],"EFGK":["H","J","B","C","A","D","L","I"],"EFGL":["H","J","B","C","A","D","I","K"],"EFHI":["C","J","B","D","A","G","L","K"],"EFHJ":["I","G","B","C","A","D","L","K"],"EFHK":["C","J","B","D","A","G","L","I"],"EFHL":["C","J","B","D","A","G","I","K"],"EFIJ":["H","G","B","C","A","D","L","K"],"EFIK":["H","G","B","C","A","D","L","J"],"EFIL":["H","G","B","C","A","D","J","K"],"EFJK":["H","G","B","C","A","D","L","I"],"EFJL":["H","G","B","C","A","D","I","K"],"EFKL":["H","G","B","C","A","D","I","J"],"EGHI":["C","J","B","D","A","F","L","K"],"EGHJ":["C","I","B","D","A","F","L","K"],"EGHK":["C","J","B","D","A","F","L","I"],"EGHL":["C","J","B","D","A","F","I","K"],"EGIJ":["H","F","B","C","A","D","L","K"],"EGIK":["C","J","B","D","A","F","L","H"],"EGIL":["H","J","B","C","A","F","D","K"],"EGJK":["H","F","B","C","A","D","L","I"],"EGJL":["H","F","B","C","A","D","I","K"],"EGKL":["H","J","B","C","A","F","D","I"],"EHIJ":["C","G","B","D","A","F","L","K"],"EHIK":["C","G","B","D","A","F","L","J"],"EHIL":["C","G","B","D","A","F","J","K"],"EHJK":["C","G","B","D","A","F","L","I"],"EHJL":["C","G","B","D","A","F","I","K"],"EHKL":["C","G","B","D","A","F","I","J"],"EIJK":["C","G","B","D","A","F","L","H"],"EIJL":["H","G","B","C","A","F","D","K"],"EIKL":["H","G","B","C","A","F","D","J"],"EJKL":["H","G","B","C","A","F","D","I"],"FGHI":["E","J","B","C","A","D","L","K"],"FGHJ":["E","I","B","C","A","D","L","K"],"FGHK":["E","J","B","C","A","D","L","I"],"FGHL":["E","J","B","C","A","D","I","K"],"FGIJ":["H","E","B","C","A","D","L","K"],"FGIK":["H","J","B","C","A","D","L","E"],"FGIL":["H","J","B","C","A","D","E","K"],"FGJK":["H","E","B","C","A","D","L","I"],"FGJL":["H","E","B","C","A","D","I","K"],"FGKL":["H","J","B","C","A","D","E","I"],"FHIJ":["E","G","B","C","A","D","L","K"],"FHIK":["E","G","B","C","A","D","L","J"],"FHIL":["E","G","B","C","A","D","J","K"],"FHJK":["E","G","B","C","A","D","L","I"],"FHJL":["E","G","B","C","A","D","I","K"],"FHKL":["E","G","B","C","A","D","I","J"],"FIJK":["H","G","B","C","A","D","L","E"],"FIJL":["H","G","B","C","A","D","E","K"],"FIKL":["H","G","B","C","A","D","E","J"],"FJKL":["H","G","B","C","A","D","E","I"],"GHIJ":["C","E","B","D","A","F","L","K"],"GHIK":["C","J","B","D","A","F","L","E"],"GHIL":["C","J","B","D","A","F","E","K"],"GHJK":["C","E","B","D","A","F","L","I"],"GHJL":["C","E","B","D","A","F","I","K"],"GHKL":["C","J","B","D","A","F","E","I"],"GIJK":["H","F","B","C","A","D","L","E"],"GIJL":["H","E","B","C","A","F","D","K"],"GIKL":["H","J","B","C","A","F","D","E"],"GJKL":["H","E","B","C","A","F","D","I"],"HIJK":["C","G","B","D","A","F","L","E"],"HIJL":["C","G","B","D","A","F","E","K"],"HIKL":["C","G","B","D","A","F","E","J"],"HJKL":["C","G","B","D","A","F","E","I"],"IJKL":["H","G","B","C","A","F","D","E"]};
+
+    // Candidate group pools shown as the slot label for each 3rd-place column.
+    const THIRD_PLACE_POOLS = {
+      1: "C/E/F/H/I", 2: "E/F/G/I/J", 3: "B/E/F/I/J", 4: "A/B/C/D/F",
+      5: "A/E/H/I/J", 6: "C/D/F/G/H", 7: "D/E/I/J/L", 8: "E/H/I/J/K"
+    };
+
+    // Knockout fixture templates ordered as a visual bracket (top-to-bottom by half).
+    // slot.kind: "group" (ref "1A"/"2A"), "third" (col 1..8), "winner"/"loser" (ref matchId).
+    const KNOCKOUT_FIXTURES = [
+      // Round of 32 (ordered so feeder pairs align with the Round of 16 below)
+      { id: 74, round: "R32", date: "2026-06-29", time: "16:30", venue: "Gillette Stadium, Boston", slot1: { kind: "group", ref: "1E" }, slot2: { kind: "third", col: 4 } },
+      { id: 77, round: "R32", date: "2026-06-30", time: "17:00", venue: "MetLife Stadium, New Jersey", slot1: { kind: "group", ref: "1I" }, slot2: { kind: "third", col: 6 } },
+      { id: 73, round: "R32", date: "2026-06-28", time: "12:00", venue: "SoFi Stadium, Los Angeles", slot1: { kind: "group", ref: "2A" }, slot2: { kind: "group", ref: "2B" } },
+      { id: 75, round: "R32", date: "2026-06-29", time: "19:00", venue: "Estadio BBVA, Monterrey", slot1: { kind: "group", ref: "1F" }, slot2: { kind: "group", ref: "2C" } },
+      { id: 83, round: "R32", date: "2026-07-02", time: "19:00", venue: "BMO Field, Toronto", slot1: { kind: "group", ref: "2K" }, slot2: { kind: "group", ref: "2L" } },
+      { id: 84, round: "R32", date: "2026-07-02", time: "12:00", venue: "SoFi Stadium, Los Angeles", slot1: { kind: "group", ref: "1H" }, slot2: { kind: "group", ref: "2J" } },
+      { id: 81, round: "R32", date: "2026-07-01", time: "17:00", venue: "Levi's Stadium, San Francisco", slot1: { kind: "group", ref: "1D" }, slot2: { kind: "third", col: 3 } },
+      { id: 82, round: "R32", date: "2026-07-01", time: "13:00", venue: "Lumen Field, Seattle", slot1: { kind: "group", ref: "1G" }, slot2: { kind: "third", col: 5 } },
+      { id: 76, round: "R32", date: "2026-06-29", time: "12:00", venue: "NRG Stadium, Houston", slot1: { kind: "group", ref: "1C" }, slot2: { kind: "group", ref: "2F" } },
+      { id: 78, round: "R32", date: "2026-06-30", time: "12:00", venue: "AT&T Stadium, Dallas", slot1: { kind: "group", ref: "2E" }, slot2: { kind: "group", ref: "2I" } },
+      { id: 79, round: "R32", date: "2026-06-30", time: "19:00", venue: "Estadio Azteca, Mexico City", slot1: { kind: "group", ref: "1A" }, slot2: { kind: "third", col: 1 } },
+      { id: 80, round: "R32", date: "2026-07-01", time: "12:00", venue: "Mercedes-Benz Stadium, Atlanta", slot1: { kind: "group", ref: "1L" }, slot2: { kind: "third", col: 8 } },
+      { id: 86, round: "R32", date: "2026-07-03", time: "18:00", venue: "Hard Rock Stadium, Miami", slot1: { kind: "group", ref: "1J" }, slot2: { kind: "group", ref: "2H" } },
+      { id: 88, round: "R32", date: "2026-07-03", time: "13:00", venue: "AT&T Stadium, Dallas", slot1: { kind: "group", ref: "2D" }, slot2: { kind: "group", ref: "2G" } },
+      { id: 85, round: "R32", date: "2026-07-02", time: "20:00", venue: "BC Place, Vancouver", slot1: { kind: "group", ref: "1B" }, slot2: { kind: "third", col: 2 } },
+      { id: 87, round: "R32", date: "2026-07-03", time: "20:30", venue: "Arrowhead Stadium, Kansas City", slot1: { kind: "group", ref: "1K" }, slot2: { kind: "third", col: 7 } },
+      // Round of 16
+      { id: 89, round: "R16", date: "2026-07-04", time: "17:00", venue: "Lincoln Financial Field, Philadelphia", slot1: { kind: "winner", ref: 74 }, slot2: { kind: "winner", ref: 77 } },
+      { id: 90, round: "R16", date: "2026-07-04", time: "12:00", venue: "NRG Stadium, Houston", slot1: { kind: "winner", ref: 73 }, slot2: { kind: "winner", ref: 75 } },
+      { id: 93, round: "R16", date: "2026-07-06", time: "14:00", venue: "AT&T Stadium, Dallas", slot1: { kind: "winner", ref: 83 }, slot2: { kind: "winner", ref: 84 } },
+      { id: 94, round: "R16", date: "2026-07-06", time: "17:00", venue: "Lumen Field, Seattle", slot1: { kind: "winner", ref: 81 }, slot2: { kind: "winner", ref: 82 } },
+      { id: 91, round: "R16", date: "2026-07-05", time: "16:00", venue: "MetLife Stadium, New Jersey", slot1: { kind: "winner", ref: 76 }, slot2: { kind: "winner", ref: 78 } },
+      { id: 92, round: "R16", date: "2026-07-05", time: "18:00", venue: "Estadio Azteca, Mexico City", slot1: { kind: "winner", ref: 79 }, slot2: { kind: "winner", ref: 80 } },
+      { id: 95, round: "R16", date: "2026-07-07", time: "12:00", venue: "Mercedes-Benz Stadium, Atlanta", slot1: { kind: "winner", ref: 86 }, slot2: { kind: "winner", ref: 88 } },
+      { id: 96, round: "R16", date: "2026-07-07", time: "13:00", venue: "BC Place, Vancouver", slot1: { kind: "winner", ref: 85 }, slot2: { kind: "winner", ref: 87 } },
+      // Quarterfinals
+      { id: 97, round: "QF", date: "2026-07-09", time: "16:00", venue: "Gillette Stadium, Boston", slot1: { kind: "winner", ref: 89 }, slot2: { kind: "winner", ref: 90 } },
+      { id: 98, round: "QF", date: "2026-07-10", time: "12:00", venue: "SoFi Stadium, Los Angeles", slot1: { kind: "winner", ref: 93 }, slot2: { kind: "winner", ref: 94 } },
+      { id: 99, round: "QF", date: "2026-07-11", time: "17:00", venue: "Hard Rock Stadium, Miami", slot1: { kind: "winner", ref: 91 }, slot2: { kind: "winner", ref: 92 } },
+      { id: 100, round: "QF", date: "2026-07-11", time: "20:00", venue: "Arrowhead Stadium, Kansas City", slot1: { kind: "winner", ref: 95 }, slot2: { kind: "winner", ref: 96 } },
+      // Semifinals
+      { id: 101, round: "SF", date: "2026-07-14", time: "14:00", venue: "AT&T Stadium, Dallas", slot1: { kind: "winner", ref: 97 }, slot2: { kind: "winner", ref: 98 } },
+      { id: 102, round: "SF", date: "2026-07-15", time: "15:00", venue: "Mercedes-Benz Stadium, Atlanta", slot1: { kind: "winner", ref: 99 }, slot2: { kind: "winner", ref: 100 } },
+      // Final
+      { id: 104, round: "F", date: "2026-07-19", time: "15:00", venue: "MetLife Stadium, New Jersey", slot1: { kind: "winner", ref: 101 }, slot2: { kind: "winner", ref: 102 } },
+      // Third place
+      { id: 103, round: "3P", date: "2026-07-18", time: "17:00", venue: "Hard Rock Stadium, Miami", slot1: { kind: "loser", ref: 101 }, slot2: { kind: "loser", ref: 102 } }
+    ];
+
+    // feederId -> list of match ids that depend on it (used for incremental re-render).
+    const KO_DEPENDENTS = {};
+    KNOCKOUT_FIXTURES.forEach(f => {
+      [f.slot1, f.slot2].forEach(s => {
+        if (s.kind === "winner" || s.kind === "loser") {
+          if (!KO_DEPENDENTS[s.ref]) KO_DEPENDENTS[s.ref] = [];
+          KO_DEPENDENTS[s.ref].push(f.id);
+        }
+      });
+    });
+
+    const KO_ROUND_ORDER = ["R32", "R16", "QF", "SF", "F"];
+    const KO_ROUND_TITLES = {
+      R32: "Round of 32", R16: "Round of 16", QF: "Quarter-finals", SF: "Semi-finals", F: "Final", "3P": "3rd Place"
+    };
+
+    function initKnockout() {
+      const stored = localStorage.getItem("world_cup_2026_knockout");
+      let saved = {};
+      if (stored) { try { saved = JSON.parse(stored); } catch (e) { saved = {}; } }
+      state.knockout = KNOCKOUT_FIXTURES.map(f => {
+        const s = saved[f.id] || {};
+        return {
+          id: f.id,
+          score1: (s.score1 === undefined ? null : s.score1),
+          score2: (s.score2 === undefined ? null : s.score2),
+          pens1: (s.pens1 === undefined ? null : s.pens1),
+          pens2: (s.pens2 === undefined ? null : s.pens2),
+          revealed: !!s.revealed
+        };
+      });
+    }
+
+    function saveKnockout() {
+      const obj = {};
+      state.knockout.forEach(k => {
+        obj[k.id] = { score1: k.score1, score2: k.score2, pens1: k.pens1, pens2: k.pens2, revealed: k.revealed };
+      });
+      localStorage.setItem("world_cup_2026_knockout", JSON.stringify(obj));
+    }
+
+    function groupIsComplete(gCode) {
+      const ms = state.matches.filter(m => m.group === gCode);
+      return ms.length > 0 && ms.every(m => m.score1 !== null && m.score2 !== null && m.revealed);
+    }
+
+    function allGroupsComplete() {
+      return Object.keys(groups).every(g => groupIsComplete(g));
+    }
+
+    function getGroupSlotTeam(ref) {
+      const pos = parseInt(ref[0], 10) - 1;
+      const gCode = ref.slice(1);
+      if (!groupIsComplete(gCode)) return null;
+      const sorted = getGroupStandings(gCode);
+      return sorted[pos] ? sorted[pos].name : null;
+    }
+
+    function getThirdPlaceAssignments() {
+      if (!allGroupsComplete()) return null;
+      const thirdsSorted = getThirdPlaceStandings();
+      const qualifying = thirdsSorted.slice(0, 8).map(t => t.group);
+      if (qualifying.length < 8) return null;
+      const allLetters = ["A","B","C","D","E","F","G","H","I","J","K","L"];
+      const missing = allLetters.filter(l => !qualifying.includes(l)).sort().join("");
+      const entry = THIRD_PLACE_COMBINATIONS[missing];
+      if (!entry) return null;
+      const map = {};
+      for (let i = 0; i < 8; i++) map[i + 1] = entry[i];
+      return map;
+    }
+
+    function getThirdPlaceTeamForColumn(col) {
+      const map = getThirdPlaceAssignments();
+      if (!map) return null;
+      const g = map[col];
+      if (!g || !groupIsComplete(g)) return null;
+      const sorted = getGroupStandings(g);
+      return sorted[2] ? sorted[2].name : null;
+    }
+
+    function getKnockoutTeamName(slot) {
+      if (!slot) return null;
+      if (slot.kind === "group") return getGroupSlotTeam(slot.ref);
+      if (slot.kind === "third") return getThirdPlaceTeamForColumn(slot.col);
+      if (slot.kind === "winner") return getKnockoutMatchWinner(slot.ref);
+      if (slot.kind === "loser") return getKnockoutMatchLoser(slot.ref);
+      return null;
+    }
+
+    function getKnockoutMatchWinner(matchId) {
+      const k = state.knockout.find(x => x.id === matchId);
+      if (!k || k.score1 === null || k.score2 === null) return null;
+      const f = KNOCKOUT_FIXTURES.find(x => x.id === matchId);
+      if (!f) return null;
+      const t1 = getKnockoutTeamName(f.slot1);
+      const t2 = getKnockoutTeamName(f.slot2);
+      if (!t1 || !t2) return null;
+      if (k.score1 > k.score2) return t1;
+      if (k.score2 > k.score1) return t2;
+      if (k.pens1 !== null && k.pens2 !== null) {
+        if (k.pens1 > k.pens2) return t1;
+        if (k.pens2 > k.pens1) return t2;
+      }
+      return null;
+    }
+
+    function getKnockoutMatchLoser(matchId) {
+      const k = state.knockout.find(x => x.id === matchId);
+      if (!k || k.score1 === null || k.score2 === null) return null;
+      const f = KNOCKOUT_FIXTURES.find(x => x.id === matchId);
+      if (!f) return null;
+      const t1 = getKnockoutTeamName(f.slot1);
+      const t2 = getKnockoutTeamName(f.slot2);
+      if (!t1 || !t2) return null;
+      if (k.score1 > k.score2) return t2;
+      if (k.score2 > k.score1) return t1;
+      if (k.pens1 !== null && k.pens2 !== null) {
+        if (k.pens1 > k.pens2) return t2;
+        if (k.pens2 > k.pens1) return t1;
+      }
+      return null;
+    }
+
+    function getSlotLabel(slot) {
+      if (slot.kind === "group") return slot.ref.replace(/^1/, "1st ").replace(/^2/, "2nd ");
+      if (slot.kind === "third") return "3rd " + THIRD_PLACE_POOLS[slot.col];
+      if (slot.kind === "winner") return "W M" + slot.ref;
+      if (slot.kind === "loser") return "L M" + slot.ref;
+      return "";
+    }
+
+    function koDownstream(matchId) {
+      const seen = new Set();
+      const stack = [matchId];
+      while (stack.length) {
+        const cur = stack.pop();
+        (KO_DEPENDENTS[cur] || []).forEach(d => {
+          if (!seen.has(d)) { seen.add(d); stack.push(d); }
+        });
+      }
+      return seen;
+    }
+
+    function getKnockoutCardHtml(matchId) {
+      const f = KNOCKOUT_FIXTURES.find(x => x.id === matchId);
+      const k = state.knockout.find(x => x.id === matchId);
+      if (!f || !k) return "";
+
+      const t1 = getKnockoutTeamName(f.slot1);
+      const t2 = getKnockoutTeamName(f.slot2);
+      const winner = getKnockoutMatchWinner(matchId);
+      const decided = !!(t1 && t2 && winner);
+      const showPens = (k.score1 !== null && k.score2 !== null && k.score1 === k.score2);
+
+      const timeZone = venueTimezones[f.venue] || "UTC";
+      const dateObj = getLocalDateFromTimeZone(f.date, f.time, timeZone);
+      const dateLabel = dateObj.toLocaleDateString("en-US", { month: "short", day: "numeric" }) + " · " +
+        getMatchTimeDisplay({ date: f.date, time: f.time, venue: f.venue });
+
+      const slotLabel1 = getSlotLabel(f.slot1);
+      const slotLabel2 = getSlotLabel(f.slot2);
+
+      function rowHtml(side, team, slotLabel, score) {
+        const isWinner = decided && winner === team;
+        const isLoser = decided && team && winner !== team;
+        let cls = "ko-team-row";
+        if (isWinner) cls += " ko-winner";
+        if (isLoser) cls += " ko-loser";
+        const flag = team ? (teamFlags[team] || "🏳️") : "➖";
+        const nameHtml = team
+          ? `<span class="ko-team-name" title="${team}">${team}</span>`
+          : `<span class="ko-team-name tbd">TBD</span><span class="ko-team-slot" title="${slotLabel}">${slotLabel}</span>`;
+        return `
+          <div class="${cls}" data-side="${side}">
+            <span class="ko-team-flag">${flag}</span>
+            ${nameHtml}
+            <span class="ko-score">
+              <input type="number" min="0" max="99" inputmode="numeric"
+                id="ko-s-${f.id}-${side}"
+                value="${score !== null ? score : ''}"
+                placeholder="-"
+                oninput="updateKoScore(${f.id}, ${side}, this.value)">
+            </span>
+          </div>`;
+      }
+
+      const pensHtml = showPens ? `
+        <div class="ko-pens-row">
+          <span class="ko-pens-label">PENS</span>
+          <input class="ko-pen-input" type="number" min="0" max="99" inputmode="numeric"
+            id="ko-p-${f.id}-1" value="${k.pens1 !== null ? k.pens1 : ''}" placeholder="-"
+            oninput="updateKoPens(${f.id}, 1, this.value)">
+          <span>:</span>
+          <input class="ko-pen-input" type="number" min="0" max="99" inputmode="numeric"
+            id="ko-p-${f.id}-2" value="${k.pens2 !== null ? k.pens2 : ''}" placeholder="-"
+            oninput="updateKoPens(${f.id}, 2, this.value)">
+        </div>` : "";
+
+      const statusCls = decided ? "ko-status-done" : "ko-status-tbd";
+      const statusText = decided ? "Decided" : (k.score1 !== null && k.score2 !== null ? "Awaiting pens" : "TBD");
+
+      return `
+        <div class="ko-match" id="ko-card-${f.id}">
+          <div class="ko-match-head">
+            <span class="ko-match-no">M${f.id}</span>
+            <span class="ko-match-when" title="${f.venue}">${dateLabel}</span>
+            <span class="ko-status ${statusCls}">${statusText}</span>
+          </div>
+          ${rowHtml(1, t1, slotLabel1, k.score1)}
+          ${rowHtml(2, t2, slotLabel2, k.score2)}
+          ${pensHtml}
+        </div>`;
+    }
+
+    function renderKnockoutTab() {
+      const root = document.getElementById("knockout-bracket-root");
+      if (!root) return;
+
+      let html = '<div class="ko-bracket-scroll"><div class="ko-bracket">';
+      KO_ROUND_ORDER.forEach(r => {
+        const fixtures = KNOCKOUT_FIXTURES.filter(f => f.round === r);
+        html += `<div class="ko-round ${r === "F" ? "ko-final-col" : ""}">
+          <div class="ko-round-title">${KO_ROUND_TITLES[r]}</div>
+          <div class="ko-round-matches">
+            ${fixtures.map(f => getKnockoutCardHtml(f.id)).join("")}
+          </div>
+        </div>`;
+      });
+      // Third-place play-off as its own column
+      html += `<div class="ko-round ko-third-col">
+        <div class="ko-round-title">${KO_ROUND_TITLES["3P"]}</div>
+        <div class="ko-round-matches">${getKnockoutCardHtml(103)}</div>
+      </div>`;
+      html += "</div></div>";
+
+      root.innerHTML = html;
+    }
+
+    function updateKoCardHighlight(matchId) {
+      const card = document.getElementById(`ko-card-${matchId}`);
+      if (!card) return;
+      const f = KNOCKOUT_FIXTURES.find(x => x.id === matchId);
+      const k = state.knockout.find(x => x.id === matchId);
+      if (!f || !k) return;
+      const winner = getKnockoutMatchWinner(matchId);
+      const decided = winner !== null;
+      const row1 = card.querySelector('.ko-team-row[data-side="1"]');
+      const row2 = card.querySelector('.ko-team-row[data-side="2"]');
+      [row1, row2].forEach(r => r && r.classList.remove("ko-winner", "ko-loser"));
+      if (decided) {
+        if (winner === getKnockoutTeamName(f.slot1)) { row1 && row1.classList.add("ko-winner"); row2 && row2.classList.add("ko-loser"); }
+        else { row2 && row2.classList.add("ko-winner"); row1 && row1.classList.add("ko-loser"); }
+      }
+      const statusBadge = card.querySelector(".ko-status");
+      if (statusBadge) {
+        if (decided) { statusBadge.className = "ko-status ko-status-done"; statusBadge.textContent = "Decided"; }
+        else if (k.score1 !== null && k.score2 !== null) { statusBadge.className = "ko-status ko-status-tbd"; statusBadge.textContent = "Awaiting pens"; }
+        else { statusBadge.className = "ko-status ko-status-tbd"; statusBadge.textContent = "TBD"; }
+      }
+      // Show/hide pens row
+      const showPens = (k.score1 !== null && k.score2 !== null && k.score1 === k.score2);
+      let pensRow = card.querySelector(".ko-pens-row");
+      if (showPens && !pensRow) {
+        const tmp = document.createElement("div");
+        tmp.innerHTML = `<div class="ko-pens-row">
+          <span class="ko-pens-label">PENS</span>
+          <input class="ko-pen-input" type="number" min="0" max="99" inputmode="numeric"
+            id="ko-p-${matchId}-1" value="${k.pens1 !== null ? k.pens1 : ''}" placeholder="-"
+            oninput="updateKoPens(${matchId}, 1, this.value)">
+          <span>:</span>
+          <input class="ko-pen-input" type="number" min="0" max="99" inputmode="numeric"
+            id="ko-p-${matchId}-2" value="${k.pens2 !== null ? k.pens2 : ''}" placeholder="-"
+            oninput="updateKoPens(${matchId}, 2, this.value)">
+        </div>`;
+        card.appendChild(tmp.firstElementChild);
+      } else if (!showPens && pensRow) {
+        pensRow.remove();
+      }
+    }
+
+    function refreshKoDownstream(matchId) {
+      koDownstream(matchId).forEach(id => {
+        const card = document.getElementById(`ko-card-${id}`);
+        if (!card) return;
+        const tmp = document.createElement("div");
+        tmp.innerHTML = getKnockoutCardHtml(id);
+        const newCard = tmp.firstElementChild;
+        if (newCard) card.replaceWith(newCard);
+      });
+    }
+
+    function updateKoScore(matchId, side, value) {
+      const k = state.knockout.find(x => x.id === matchId);
+      if (!k) return;
+      const val = value === "" ? null : parseInt(value, 10);
+      const v = (val === null || isNaN(val)) ? null : Math.max(0, val);
+      if (side === 1) k.score1 = v; else k.score2 = v;
+      if (k.score1 === null || k.score2 === null || k.score1 !== k.score2) {
+        k.pens1 = null; k.pens2 = null;
+      }
+      saveKnockout();
+      updateKoCardHighlight(matchId);
+      refreshKoDownstream(matchId);
+    }
+
+    function updateKoPens(matchId, side, value) {
+      const k = state.knockout.find(x => x.id === matchId);
+      if (!k) return;
+      const val = value === "" ? null : parseInt(value, 10);
+      const v = (val === null || isNaN(val)) ? null : Math.max(0, val);
+      if (side === 1) k.pens1 = v; else k.pens2 = v;
+      saveKnockout();
+      updateKoCardHighlight(matchId);
+      refreshKoDownstream(matchId);
+    }
+
     // Page Load
     window.addEventListener("DOMContentLoaded", () => {
       initTheme();
       initTimeDisplayMode();
       initMatches();
+      initKnockout();
       initTodayButton();
       updateHeaderStats();
       renderMatches();
